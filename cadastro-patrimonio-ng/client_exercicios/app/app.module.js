@@ -1,9 +1,6 @@
-angular.module('cadpat', [])
+(function(angular, undefined) {
+    'use strict';
 
-    .controller('listagemController', ['$scope', function($scope) {
+    angular.module('cadpat', ['bemControllers'])
 
-        $scope.foto = {
-            url: 'http://bit.ly/imgbacen',
-            alt: 'Banco Central'
-        };
-    }]);
+})(angular);

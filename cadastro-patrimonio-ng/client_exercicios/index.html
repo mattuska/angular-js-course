@@ -3,11 +3,46 @@
     <head>
         <meta charset="utf-8">
         <title>Cadastro de Patrimônio</title>
+
+        <!-- jQuery -->
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+        <!-- Bootstrap -->
+        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+        <!-- AngularJS -->
         <script src="bower_components/angular/angular.js"></script>
         <script src="app/app.module.js"></script>
+        <script src="app/bem/bem.controllers.js"></script>
+
     </head>
-    <body ng-controller="listagemController">
-        <h1>Olá Cadastro de Patrimônio</h1>
-        <img ng-src="{{foto.url}}" alt="{{foto.alt}}">
+    <body ng-controller="ListagemController as vm">
+        <div class="container">
+            <div class="page-header">
+                <h1>Listagem de Bens</h1>
+            </div>
+            <div class="row"></div>
+
+                <!-- Barra Lateral -->
+                <div class="col-md-2">
+                    Busca: <input type="text" ng-model="vm.criterio">
+                </div>
+
+                <!-- Conteudo -->
+                <div class="col-md-10">
+                    <div ng-repeat="bem in vm.bens | filter:{descricao:vm.criterio}" class="row">
+                        <div class="col-md-3">
+                            <a class="thumbnail">
+                                <img ng-src="{{bem.urlFoto}}" alt="{{bem.titulo}}">
+                                <div class="caption">
+                                    <h3 ng-bind="bem.descricao"></h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
