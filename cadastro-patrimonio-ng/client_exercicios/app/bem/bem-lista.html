@@ -13,12 +13,14 @@
     <div class="col-md-10">
         <div ng-repeat="bem in vm.bens | filter:{descricao:vm.criterio}" class="row">
             <div class="col-md-3">
-                <a class="thumbnail" href="/bens/{{bem._id}}">
+                <a class="thumbnail" ng-href="/bens/{{bem._id}}">
                     <img ng-src="{{bem.urlFoto}}" alt="{{bem.titulo}}">
                     <div class="caption">
                         <h3 ng-bind="bem.descricao"></h3>
                     </div>
                 </a>
+                <a ng-href="{{'/bens/alterar/' + bem._id}}" class="btn btn-primary" role="button">Alterar</a>
+                <button ng-click="vm.excluir(bem._id)" class="btn btn-default" role="button">Excluir</button>
             </div>
         </div>
     </div>

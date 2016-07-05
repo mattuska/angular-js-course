@@ -20,6 +20,11 @@
                 controller: 'IncluirController',
                 controllerAs: 'vm'
             })
+            .when('/bens/alterar/:id', {
+                templateUrl: 'app/bem/bem-mantem.html',
+                controller: 'AlterarController',
+                controllerAs: 'vm'
+            })
             .when('/bens/:id', {
                 templateUrl: 'app/bem/bem-detalhe.html',
                 controller: 'DetalheController',
