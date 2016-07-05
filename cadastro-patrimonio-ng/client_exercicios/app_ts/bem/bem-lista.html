@@ -1,0 +1,30 @@
+<!-- <div class="page-header">
+    <h1>Listagem de Bens</h1>
+</div> -->
+<ac-cabecalho texto="Listagem de Bens">
+    <h3>Lista dos bens cadastrados de: {{vm.nomePessoa}}</h3>
+</ac-cabecalho>
+<div class="row">
+
+    <!-- Barra Lateral -->
+    <div class="col-md-2">
+        Busca: <input type="text" ng-model="vm.criterio">
+        <a href="/bens/incluir" class="btn btn-primary" role="button">Novo Bem</a>
+    </div>
+
+    <!-- Conteudo -->
+    <div class="col-md-10">
+        <div ng-repeat="bem in vm.bens | filter:{descricao:vm.criterio}" class="row">
+            <div class="col-md-3">
+                <a class="thumbnail" ng-href="/bens/{{bem._id}}">
+                    <img ng-src="{{bem.urlFoto}}" alt="{{bem.titulo}}">
+                    <div class="caption">
+                        <h3 ng-bind="bem.descricao"></h3>
+                    </div>
+                </a>
+                <a ng-href="{{'/bens/alterar/' + bem._id}}" class="btn btn-primary" role="button">Alterar</a>
+                <button ng-click="vm.excluir(bem._id)" class="btn btn-default" role="button">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
