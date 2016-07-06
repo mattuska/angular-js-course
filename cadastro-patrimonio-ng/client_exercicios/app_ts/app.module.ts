@@ -3,6 +3,8 @@ namespace cadpat {
 
     angular.module('cadpat', [
         'ngRoute',
-        'bemControllers'
+        'bemControllers',
+        'cadpatFilters',
+        'cadpatServices'
     ]);
 }

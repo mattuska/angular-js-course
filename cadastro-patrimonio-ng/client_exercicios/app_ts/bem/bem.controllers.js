@@ -1,107 +1,107 @@
 var cadpat;
 (function (cadpat) {
     var bem;
-    (function (bem) {
+    (function (bem_1) {
         'use strict';
         var ListagemController = (function () {
-            function ListagemController($http, $window) {
-                this.$http = $http;
+            function ListagemController(BemResource, $window) {
+                this.BemResource = BemResource;
                 this.$window = $window;
-                this.nomePessoa = "Matheus";
+                this.nomePessoa = 'Matheus';
                 this.listar();
             }
             ////////////////
             ListagemController.prototype.listar = function () {
                 var _this = this;
-                this.$http.get('/api/v1/bens')
-                    .success(function (response) {
-                    _this.bens = response;
-                })
-                    .error(function (message) {
-                    _this.$window.alert(message);
+                this.BemResource.query(function (bens) {
+                    _this.bens = bens;
+                }, function (error) {
+                    _this.$window.alert(error);
                 });
             };
             ListagemController.prototype.excluir = function (id) {
                 var _this = this;
-                if (!this.$window.confirm('Confirma a exclusão do bem id: ' + id + '?')) {
+                if (!this.$window.confirm('Confirma a exclusão do bem id: ${id}?')) {
                     return;
                 }
-                this.$http.delete('/api/v1/bens/' + id)
-                    .success(function (response) {
-                    _this.$window.alert('Bem excluido com sucesso!');
+                this.BemResource.delete({
+                    id: id
+                }, function () {
+                    _this.$window.alert('Bem excluído com sucesso!');
                     _this.listar();
-                })
-                    .error(function (message) {
-                    _this.$window.alert(message);
+                }, function (error) {
+                    _this.$window.alert(error);
                 });
             };
-            ListagemController.$inject = ['$http', '$window'];
+            ListagemController.$inject = ['BemResource', '$window'];
             return ListagemController;
         }());
+        bem_1.ListagemController = ListagemController;
         var DetalheController = (function () {
             ////////////////
-            function DetalheController($http, $routeParams, $window) {
+            function DetalheController(BemResource, $routeParams, $window) {
                 var _this = this;
-                $http.get('/api/v1/bens/' + $routeParams.id)
-                    .success(function (response) {
-                    _this.bem = response;
-                })
-                    .error(function (message) {
-                    $window.alert(message);
+                this.BemResource = BemResource;
+                this.$routeParams = $routeParams;
+                this.$window = $window;
+                BemResource.get({
+                    id: $routeParams.id,
+                }, function (bem) {
+                    _this.bem = bem;
+                }, function (error) {
+                    _this.$window.alert(error);
                 });
             }
-            DetalheController.$inject = ['$http', '$routeParams', '$window'];
+            DetalheController.$inject = ['BemResource', '$routeParams', '$window'];
             return DetalheController;
         }());
         var IncluirController = (function () {
-            function IncluirController($http, $location, $window) {
-                this.$http = $http;
+            function IncluirController(BemResource, $location, $window) {
+                this.BemResource = BemResource;
                 this.$location = $location;
                 this.$window = $window;
             }
             ////////////////
             IncluirController.prototype.salvar = function () {
                 var _this = this;
-                this.$http.post('/api/v1/bens', this.bem)
-                    .success(function (response) {
-                    _this.$window.alert('Bem incluido com sucesso');
+                this.BemResource.save(this.bem, function () {
+                    _this.$window.alert('Bem incluído com sucesso');
                     _this.$location.path('/bens');
-                })
-                    .error(function (message) {
-                    _this.$window.alert(message);
+                }, function (error) {
+                    _this.$window.alert(error);
                 });
             };
-            IncluirController.$inject = ['$http', '$location', '$window'];
+            IncluirController.$inject = ['BemResource', '$location', '$window'];
             return IncluirController;
         }());
         var AlterarController = (function () {
-            function AlterarController($http, $location, $routeParams, $window) {
+            function AlterarController(BemResource, $location, $routeParams, $window) {
                 var _this = this;
-                this.$http = $http;
+                this.BemResource = BemResource;
                 this.$location = $location;
                 this.$routeParams = $routeParams;
                 this.$window = $window;
-                $http.get('/api/v1/bens/' + $routeParams.id)
-                    .success(function (response) {
-                    _this.bem = response;
-                })
-                    .error(function (message) {
-                    _this.$window.alert(message);
+                this.BemResource.get({
+                    id: this.$routeParams.id,
+                }, function (bem) {
+                    _this.bem = bem;
+                }, function (error) {
+                    _this.$window.alert(error);
                 });
             }
             ////////////////
             AlterarController.prototype.salvar = function () {
                 var _this = this;
-                this.$http.put('/api/v1/bens/' + this.bem._id, this.bem)
-                    .success(function (response) {
+                this.BemResource.update({
+                    id: this.$routeParams.id,
+                }, this.bem, function () {
                     _this.$window.alert('Bem alterado com sucesso');
                     _this.$location.path('/bens');
-                })
-                    .error(function (message) {
-                    _this.$window.alert(message);
+                }, function (error) {
+                    _this.$window.alert(error);
                 });
             };
-            AlterarController.$inject = ['$http', '$location', '$routeParams', '$window'];
+            AlterarController.$inject = ['BemResource', '$location', '$routeParams', '$window'];
             return AlterarController;
         }());
         angular

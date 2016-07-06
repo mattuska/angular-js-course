@@ -1,0 +1,22 @@
+<div class="col-md-10">
+    <div ng-repeat="bem in vm.bens | filter:{descricao:vm.criterio}" class="row">
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <a ng-href="/bens/{{bem._id}}">
+                    <img ng-src="{{bem.urlFoto}}" alt="{{bem.titulo}}">
+                    <div class="caption">
+                        <h3 ng-bind="bem.descricao | maiusculo"></h3>
+                    </div>
+                </a>
+            </div>
+            <ac-bt-navegar
+                destino="{{'/bens/alterar/' + bem._id}}"
+                texto="Alterar">
+            </ac-bt-navegar>
+            <ac-bt-atencao
+                acao="vm.onExcluir({bemId: bem._id})"
+                texto="Excluir">
+            </ac-bt-atencao>
+       </div>
+    </div>
+</div>
