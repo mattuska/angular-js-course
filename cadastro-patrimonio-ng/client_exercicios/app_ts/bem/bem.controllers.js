@@ -4,9 +4,10 @@ var cadpat;
     (function (bem_1) {
         'use strict';
         var ListagemController = (function () {
-            function ListagemController(BemResource, $window) {
+            function ListagemController(BemResource, $window, alertaService) {
                 this.BemResource = BemResource;
                 this.$window = $window;
+                this.alertaService = alertaService;
                 this.nomePessoa = 'Matheus';
                 this.listar();
             }
@@ -16,24 +17,24 @@ var cadpat;
                 this.BemResource.query(function (bens) {
                     _this.bens = bens;
                 }, function (error) {
-                    _this.$window.alert(error);
+                    _this.alertaService.add('danger', error);
                 });
             };
             ListagemController.prototype.excluir = function (id) {
                 var _this = this;
-                if (!this.$window.confirm('Confirma a exclusão do bem id: ${id}?')) {
+                if (!this.$window.confirm("Confirma a exclus\u00E3o do bem id: " + id + "?")) {
                     return;
                 }
                 this.BemResource.delete({
                     id: id
                 }, function () {
-                    _this.$window.alert('Bem excluído com sucesso!');
+                    _this.alertaService.add('success', 'Bem excluído com sucesso');
                     _this.listar();
                 }, function (error) {
-                    _this.$window.alert(error);
+                    _this.alertaService.add('danger', error);
                 });
             };
-            ListagemController.$inject = ['BemResource', '$window'];
+            ListagemController.$inject = ['BemResource', '$window', 'alertaService'];
             return ListagemController;
         }());
         bem_1.ListagemController = ListagemController;

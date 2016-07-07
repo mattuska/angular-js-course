@@ -18,6 +18,10 @@
         <span ng-show="vm.frmbem.descricao.$dirty && vm.frmbem.descricao.$error.minlength" class="form-control alert-danger">
             Descrição deve ter no mínimo 10 caracteres
         </span>
+        <div class="btn-group">
+            <label class="btn btn-primary" ng-model="vm.bem.tipo" uib-btn-radio="'movel'">Móvel</label>
+            <label class="btn btn-primary" ng-model="vm.bem.tipo" uib-btn-radio="'imovel'">Imóvel</label>
+        </div>
     </div>
     <button type="submit" class="btn btn-primary" ng-disabled="vm.frmbem.$invalid">Salvar</button>
     <a href="/bens" class="btn btn-default">Cancelar</a>

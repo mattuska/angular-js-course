@@ -12,11 +12,11 @@ namespace cadpat.bem {
     }
 
     export class ListagemController {
-        static $inject: Array<string> = ['BemResource', '$window'];
+        static $inject: Array<string> = ['BemResource', '$window', 'alertaService'];
         bens: IBem[];
         nomePessoa: string;
 
-        constructor(private BemResource: cadpat.IBemResourceClass, private $window: ng.IWindowService) {
+        constructor(private BemResource: cadpat.IBemResourceClass, private $window: ng.IWindowService, private alertaService: cadpat.alerta.AlertaService) {
             this.nomePessoa = 'Matheus';
             this.listar();
         }
@@ -28,24 +28,24 @@ namespace cadpat.bem {
                     this.bens = bens;
                 },
                 (error) => {
-                    this.$window.alert(error);
+                    this.alertaService.add('danger', error);
                 }
             );
         }
 
         excluir(id: string) {
-            if(!this.$window.confirm('Confirma a exclusão do bem id: ${id}?')) {
+            if (!this.$window.confirm(`Confirma a exclusão do bem id: ${id}?`)) {
                 return;
             }
             this.BemResource.delete( {
                     id: id
                 },
                 () => {
-                    this.$window.alert('Bem excluído com sucesso!');
+                    this.alertaService.add('success', 'Bem excluído com sucesso');
                     this.listar();
                 },
                 (error) => {
-                    this.$window.alert(error);
+                    this.alertaService.add('danger', error);
                 }
             );
         }

@@ -1,22 +1,43 @@
 <div class="col-md-10">
-    <div ng-repeat="bem in vm.bens | filter:{descricao:vm.criterio}" class="row">
-        <div class="col-md-3">
-            <div class="thumbnail">
-                <a ng-href="/bens/{{bem._id}}">
-                    <img ng-src="{{bem.urlFoto}}" alt="{{bem.titulo}}">
-                    <div class="caption">
-                        <h3 ng-bind="bem.descricao | maiusculo"></h3>
-                    </div>
-                </a>
-            </div>
-            <ac-bt-navegar
-                destino="{{'/bens/alterar/' + bem._id}}"
-                texto="Alterar">
-            </ac-bt-navegar>
-            <ac-bt-atencao
-                acao="vm.onExcluir({bemId: bem._id})"
-                texto="Excluir">
-            </ac-bt-atencao>
-       </div>
+    <div class="row">
+        <div class="com-md-6">
+            <uib-carousel active="0">
+                <uib-slide ng-repeat="bem in vm.bens" index="$index">
+                    <img ng-src="{{bem.urlFoto}}" alt="{{bem.titulo}}" style="height:300px; margin:0 auto;">
+                    <p>{{bem.descricao}}</p>
+                </uib-slide>
+            </uib-carousel>
+        </div>
     </div>
+    <uib-accordion>
+        <uib-accordion-group heading="Bem ID: {{bem._id}}" ng-repeat="bem in vm.bens | filter:descricao:vm.criterio" class="row">
+            <div class="col-md-12">
+                <div class="thumbnail">
+                    <a ng-href="/bens/{{bem._id}}">
+                        <img ng-src="{{bem.urlFoto}}" alt="{{bem.titulo}}">
+                        <div class="caption">
+                            <h3 ng-bind="bem.descricao | maiusculo"></h3>
+                            <h4>Tipo: {{bem.tipo}}</h4>
+                        </div>
+                    </a>
+
+                    <button type="button" class="btn btn-default" ng-click="exibirDetalhes = !exibirDetalhes">
+                        {{exibirDetalhes? 'Menos' : 'Mais'}} Detalhes
+                    </button>
+                    <hr>
+                    <div uib-collapse="!exibirDetalhes">
+                        <div class="well well-lg">Lorem ipsum torquent viverra est dui nulla platea quam, fames sit dui auctor sociosqu nibh potenti, luctus aenean eget inceptos feugiat mattis etiam. mi tempor euismod suspendisse tristique consequat sit aliquet sociosqu lacinia habitasse accumsan habitasse, conubia aenean tincidunt pretium odio faucibus in habitasse quis eget metus. justo duis faucibus sodales nec risus auctor proin suspendisse lorem, habitasse consectetur porta dictumst blandit interdum blandit erat per, laoreet volutpat vulputate potenti platea sociosqu velit sem. luctus phasellus purus ad mi ultricies senectus pharetra sapien proin, molestie integer torquent etiam volutpat netus tellus velit, erat aptent convallis gravida ornare curabitur nulla taciti.</div>
+                    </div>
+                </div>
+                <ac-bt-navegar
+                    destino="{{'/bens/alterar/' + bem._id}}"
+                    texto="Alterar">
+                </ac-bt-navegar>
+                <ac-bt-atencao
+                    acao="vm.onExcluir({bemId: bem._id})"
+                    texto="Excluir">
+                </ac-bt-atencao>
+           </div>
+        </uib-accordion-group>
+    </uib-accordion>
 </div>

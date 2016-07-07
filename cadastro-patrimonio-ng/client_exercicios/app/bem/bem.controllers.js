@@ -87,7 +87,6 @@
 
         ////////////////
         function activate() {
-            console.log($http);
             $http.get('/api/v1/bens/' + $routeParams.id)
                 .success(function(response) {
                     vm.bem = response;
